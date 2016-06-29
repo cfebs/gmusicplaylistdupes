@@ -4,6 +4,7 @@ import gmusicapi
 import pprint
 import json
 import getpass
+import os
 
 def map_track_duplication(tracks):
     album_track_duplicate_map = {}
@@ -89,13 +90,14 @@ def get_track_ids(tracks):
     return track_ids
 
 
-from_test = False
+from_test_file = os.environ.get('GMUSIC_DUPE_TEST_FILE', None)
 logged_in = False
 playlist_contents = []
 
-if from_test:
+if from_test_file is not None:
     logged_in = True
-    with open('/home/collin/gists/playlistcontentsresponse.json', 'r') as f:
+    print('Loading from test file {}'.format(from_test_file))
+    with open(os.path.abspath(from_test_file), 'r') as f:
         playlist_contents = json.loads(f.read())
 else:
     api = gmusicapi.Mobileclient()
@@ -131,6 +133,7 @@ if logged_in:
                 raise Exception("Empty track id")
 
             track_map[track_id] = track
+            track_count = track_count + 1
 
             if track_id not in uniq_track_ids:
                 uniq_track_ids.add(track_id)
@@ -140,7 +143,7 @@ if logged_in:
             dupe_track_ids.append(track_id)
             dupe_playlist_track_ids.add(track.get('id'))
 
-        print('Found {} dupe tracks out of {}'.format(len(dupe_track_ids), len(dupe_playlist_track_ids)))
+        print('Found {} dupe tracks out of {} total'.format(len(dupe_track_ids), track_count))
         if len(dupe_track_ids) > 0:
             print('These tracks are unique:')
             #pp.pprint(track_map)
