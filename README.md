@@ -8,10 +8,9 @@ with a few tests in your library. I am not responsible for any damage to your li
 
 ### Quick usage
 
-```
-pip install gmusicapi
-python kill_playlist_dupes.py
-```
+- [Download the script](https://raw.githubusercontent.com/cfebs/gmusicdupes/master/kill_playlist_dupes.py)
+- `pip install gmusicapi`
+- `python kill_playlist_dupes.py`
 
 Output will look something like this:
 
