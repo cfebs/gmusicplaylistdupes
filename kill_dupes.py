@@ -89,8 +89,19 @@ def get_track_ids(tracks):
     return track_ids
 
 
-api = gmusicapi.Mobileclient()
-logged_in = api.login(raw_input('Username: '), getpass.getpass(), gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
+from_test = False
+logged_in = False
+playlist_contents = []
+
+if from_test:
+    logged_in = True
+    with open('/home/collin/gists/playlistcontentsresponse.json', 'r') as f:
+        playlist_contents = json.loads(f.read())
+else:
+    api = gmusicapi.Mobileclient()
+    logged_in = api.login(raw_input('Username: '), getpass.getpass(), gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
+    playlist_contents = api.get_all_user_playlist_contents()
+
 #logged_in = True
 #
 #pp = pprint.PrettyPrinter(indent=2)
@@ -100,12 +111,6 @@ if logged_in:
     #playlists = api.get_all_playlists()
     #pp.pprint(playlists)
 
-    playlist_contents = []
-    #with open('/home/collin/gists/playlistcontentsresponse.json', 'r') as f:
-    #    playlist_contents = json.loads(f.read())
-
-    playlist_contents = api.get_all_user_playlist_contents()
-    print(json.dumps(playlist_contents))
 
     #pp.pprint(playlist_contents)
 
@@ -116,6 +121,7 @@ if logged_in:
         print('\n\nProcessing playlist "{}"'.format(playlist.get('name')))
         uniq_track_ids = set()
         dupe_track_ids = []
+        dupe_playlist_track_ids = set()
         track_count = 0
         track_map = {}
         for track in playlist.get('tracks', []):
@@ -132,8 +138,9 @@ if logged_in:
 
             # we have a dupe
             dupe_track_ids.append(track_id)
+            dupe_playlist_track_ids.add(track.get('id'))
 
-        print('Found {} dupe tracks out of {}'.format(len(dupe_track_ids), len(track_map)))
+        print('Found {} dupe tracks out of {}'.format(len(dupe_track_ids), len(dupe_playlist_track_ids)))
         if len(dupe_track_ids) > 0:
             print('These tracks are unique:')
             #pp.pprint(track_map)
@@ -158,6 +165,7 @@ if logged_in:
                 #pp.pprint(track)
                 print('\tid: {}, title: "{}", album: "{}", artist: "{}"'.format(track_id, track_info.get('title'), track_info.get('album'), track_info.get('artist')))
 
+        print("=========================")
         # Find duplicates
 
     #all_tracks = api.get_all_songs()
