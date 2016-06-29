@@ -101,11 +101,11 @@ if logged_in:
     #pp.pprint(playlists)
 
     playlist_contents = []
-    with open('/home/collin/gists/playlistcontentsresponse.json', 'r') as f:
-        playlist_contents = json.loads(f.read())
+    #with open('/home/collin/gists/playlistcontentsresponse.json', 'r') as f:
+    #    playlist_contents = json.loads(f.read())
 
-    #playlist_contents = api.get_all_user_playlist_contents()
-    #print(json.dumps(playlist_contents))
+    playlist_contents = api.get_all_user_playlist_contents()
+    print(json.dumps(playlist_contents))
 
     #pp.pprint(playlist_contents)
 
