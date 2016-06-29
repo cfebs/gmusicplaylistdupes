@@ -109,8 +109,6 @@ if logged_in:
 
     #pp.pprint(playlist_contents)
 
-    pass
-
     for playlist in playlist_contents:
         if playlist.get('type') != 'USER_GENERATED':
             continue
