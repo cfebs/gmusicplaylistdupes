@@ -12,8 +12,6 @@ with a few tests in your library. I am not responsible for any damage to your li
 - `pip install gmusicapi`
 - `python kill_playlist_dupes.py`
 
-> If you are not familiar with terminal `Ctrl c` or `Cmd c` should stop the script at any time.
-
 Output will look something like this:
 
 ```
