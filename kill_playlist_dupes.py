@@ -89,8 +89,9 @@ if __name__ == "__main__":
             # playlist track resource (aka. the one we want to get rid of)
             dupe_playlist_track_ids.add(track.get('id'))
 
-        print('Found {} dupe tracks out of {} total'.format(len(dupe_track_ids), track_count))
         if len(dupe_track_ids) <= 0:
+            print('Found {} dupe tracks out of {} total'.format(len(dupe_track_ids), track_count))
+            print("="*80)
             continue # next playlist
 
         print('These tracks are unique:')
@@ -105,6 +106,7 @@ if __name__ == "__main__":
             track_info = track.get('track')
             print_track_info(track_id, track_info)
 
+        print('\nFound {} dupe tracks out of {} total'.format(len(dupe_track_ids), track_count))
         if yn_choice("Clean this up?", 'no'):
             print('Removed {} entries'.format(len(dupe_playlist_track_ids)))
             if api is None:
