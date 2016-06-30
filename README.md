@@ -12,7 +12,7 @@ with a few tests in your library. I am not responsible for any damage to your li
 - `pip install gmusicapi`
 - `python kill_playlist_dupes.py`
 
-> Once you have gmusicapi installed, you can also use this oneliner: `python <(curl -sL https://raw.githubusercontent.com/cfebs/gmusicplaylistdupes/master/kill_playlist_dupes.py)`
+> Once you have gmusicapi installed, you can also use this oneliner: `python <(curl -sL 'https://raw.githubusercontent.com/cfebs/gmusicplaylistdupes/master/kill_playlist_dupes.py')`
 
 Output will look something like this:
 
