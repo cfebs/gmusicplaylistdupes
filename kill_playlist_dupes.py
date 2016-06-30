@@ -29,6 +29,8 @@ def get_track_ids(tracks):
 
 
 if __name__ == "__main__":
+    SHOW_TRACK_INFO = bool(int(os.environ.get('GMUSIC_DUPE_SHOW_TEST_INFO', None)))
+
     from_test_file = os.environ.get('GMUSIC_DUPE_TEST_FILE', None)
     playlist_contents = []
     api = None
@@ -93,17 +95,19 @@ if __name__ == "__main__":
             print("="*80)
             continue # next playlist
 
-        print('These tracks are unique:')
-        for track_id in uniq_track_ids:
-            track = track_map.get(track_id, None)
-            track_info = track.get('track')
-            print_track_info(track_id, track_info)
+        if SHOW_TRACK_INFO:
+            print('These tracks are unique:')
+            for track_id in uniq_track_ids:
+                track = track_map.get(track_id, None)
+                track_info = track.get('track')
+                print_track_info(track_id, track_info)
 
-        print('\nThese tracks are duplicates!!:')
-        for track_id in dupe_track_ids:
-            track = track_map.get(track_id, None)
-            track_info = track.get('track')
-            print_track_info(track_id, track_info)
+        if SHOW_TRACK_INFO:
+            print('\nThese tracks are duplicates!!:')
+            for track_id in dupe_track_ids:
+                track = track_map.get(track_id, None)
+                track_info = track.get('track')
+                print_track_info(track_id, track_info)
 
         print('\nFound {} dupe tracks out of {} total in playlist "{}"'.format(len(dupe_track_ids), track_count, playlist_name))
         if yn_choice("Clean this up?", 'no'):
