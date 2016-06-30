@@ -48,6 +48,7 @@ if __name__ == "__main__":
         if not logged_in:
             sys.exit('Error: Log in failed')
 
+        print('Logged in, fetching playlists')
         playlist_contents = api.get_all_user_playlist_contents()
         #to create a test file
         test_file = os.environ.get('GMUSIC_WRITE_TEST_FILE', None)
@@ -60,10 +61,8 @@ if __name__ == "__main__":
 
 
     for playlist in playlist_contents:
-        if playlist.get('type') != 'USER_GENERATED':
-            continue
-
-        print('\nProcessing playlist "{}"'.format(playlist.get('name')))
+        playlist_name = playlist.get('name')
+        print('\nProcessing playlist "{}"'.format(playlist_name))
         uniq_track_ids = set()
         dupe_track_ids = []
         dupe_playlist_track_ids = set()
@@ -90,7 +89,7 @@ if __name__ == "__main__":
             dupe_playlist_track_ids.add(track.get('id'))
 
         if len(dupe_track_ids) <= 0:
-            print('Found {} dupe tracks out of {} total'.format(len(dupe_track_ids), track_count))
+            print('Found {} dupe tracks out of {} total in playlist "{}"'.format(len(dupe_track_ids), track_count, playlist_name))
             print("="*80)
             continue # next playlist
 
@@ -106,7 +105,7 @@ if __name__ == "__main__":
             track_info = track.get('track')
             print_track_info(track_id, track_info)
 
-        print('\nFound {} dupe tracks out of {} total'.format(len(dupe_track_ids), track_count))
+        print('\nFound {} dupe tracks out of {} total in playlist "{}"'.format(len(dupe_track_ids), track_count, playlist_name))
         if yn_choice("Clean this up?", 'no'):
             print('Removed {} entries'.format(len(dupe_playlist_track_ids)))
             if api is None:
