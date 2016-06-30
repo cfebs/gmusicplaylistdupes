@@ -29,7 +29,7 @@ def get_track_ids(tracks):
 
 
 if __name__ == "__main__":
-    SHOW_TRACK_INFO = bool(int(os.environ.get('GMUSIC_DUPE_SHOW_TEST_INFO', None)))
+    SHOW_TRACK_INFO = str(os.environ.get('GMUSIC_DUPE_SHOW_TEST_INFO')).strip() == '1'
 
     from_test_file = os.environ.get('GMUSIC_DUPE_TEST_FILE', None)
     playlist_contents = []
