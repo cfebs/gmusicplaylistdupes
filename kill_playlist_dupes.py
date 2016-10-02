@@ -7,9 +7,15 @@ import getpass
 import os
 import sys
 
+def get_input(prompt):
+    if sys.version_info >= (3, 0):
+        return input(prompt)
+
+    return raw_input(prompt)
+
 def yn_choice(message, default='y'):
     choices = 'Y/n' if default.lower() in ('y', 'yes') else 'y/N'
-    choice = raw_input("%s (%s) " % (message, choices))
+    choice = get_input("%s (%s) " % (message, choices))
     values = ('y', 'yes', '') if default == 'y' else ('y', 'yes')
     return choice.strip().lower() in values
 
@@ -45,7 +51,7 @@ if __name__ == "__main__":
             playlist_contents = json.loads(f.read())
     else:
         api = gmusicapi.Mobileclient()
-        logged_in = api.login(raw_input('Username: '), getpass.getpass(), gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
+        logged_in = api.login(get_input('Username: '), getpass.getpass(), gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
 
         if not logged_in:
             sys.exit('Error: Log in failed')
