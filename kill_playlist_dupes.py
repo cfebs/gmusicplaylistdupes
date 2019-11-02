@@ -58,7 +58,6 @@ if __name__ == "__main__":
             i = i + 1
             logged_in = api.oauth_login(gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
             if logged_in:
-                print api
                 break
 
             if not logged_in:
