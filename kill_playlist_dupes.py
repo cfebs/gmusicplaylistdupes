@@ -51,7 +51,18 @@ if __name__ == "__main__":
             playlist_contents = json.loads(f.read())
     else:
         api = gmusicapi.Mobileclient()
-        logged_in = api.login(get_input('Username: '), getpass.getpass(), gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
+
+        logged_in = False
+        i = 0
+        while i < 4:
+            i = i + 1
+            logged_in = api.oauth_login(gmusicapi.Mobileclient.FROM_MAC_ADDRESS)
+            if logged_in:
+                print api
+                break
+
+            if not logged_in:
+                creds = api.perform_oauth()
 
         if not logged_in:
             sys.exit('Error: Log in failed')
